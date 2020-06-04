@@ -28,14 +28,34 @@ public class LoginTest {
     @Test
     public void testLoginWithProperCredentials() {
         LoginPage loginPage = new LoginPage(driver);
+        ProductPage productPage = new ProductPage(driver);
         loginPage.loginAs("michal.dobrzycki@coderslab.pl", "CodersLab");
 
         Assert.assertEquals("Automated Tester", loginPage.getLoggedUsername());
+
+        driver.findElement(By.xpath("//*[@data-id-product='1']")).click();
+
+        double regularPrice = productPage.getRegularPrice();
+        double currentPrice = productPage.getCurrentPrice();
+        double discount = productPage.getDiscountValue();
+
+        // oblicz cenę po rabacie
+        double afterDiscount = regularPrice - regularPrice*discount;
+
+        Assert.assertEquals(19.12, currentPrice, 0.2);
+        Assert.assertEquals(23.90, regularPrice, 0.2);
+
+        System.out.println("Regular price: " + regularPrice);
+        System.out.println("Current price: " + currentPrice);
+
+        System.out.println("Should be after discount: " + afterDiscount);
+
+        Assert.assertEquals(afterDiscount, currentPrice, 0.2);
     }
 
     @After
     public void tearDown() {
-        driver.quit();
+        //driver.quit();
     }
 
 }

@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class LoginPage {
-    private static WebDriver driver;
+    private WebDriver driver;
 
     public LoginPage(WebDriver driver) {
         this.driver = driver;
